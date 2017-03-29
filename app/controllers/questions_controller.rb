@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+
   def index
     @questions = Question.all
   end
@@ -12,7 +13,7 @@ class QuestionsController < ApplicationController
   end
   
   def create
-    @question = Question.new(params.require(:question).permit(:title, :body, :resolved))
+    @question = Question.new(question_params)
     if @question.save
       flash[:notice] = "Question was saved."
       redirect_to @question
@@ -28,7 +29,7 @@ class QuestionsController < ApplicationController
   
   def update
     @question = Question.find(params[:id])
-    if @question.update_attributes(params.require(:question).permit(:title, :body, :resolved))
+    if @question.update_attributes(question_params)
       flash[:notice] = "Question was updated."
       redirect_to @question
     else
@@ -47,5 +48,10 @@ class QuestionsController < ApplicationController
       flash[:error] = "There was an error deleting the question."
       render :show
     end
+  end
+  
+  private
+  def question_params
+    params.require(:question).permit(:title, :body, :resolved)
   end
 end
