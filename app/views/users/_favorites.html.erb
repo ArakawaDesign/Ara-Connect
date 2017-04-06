@@ -1,0 +1,15 @@
+<div class="media">
+  <%= render partial: 'votes/voter', locals: { post: post } %>
+  <div class="media-body">
+    <h4 class="media-heading">
+      <%= link_to post.title, topic_post_path(post.topic, post) %>
+    </h4>
+    <small>
+      <%= image_tag current_user.avatar_url(48), class: "gravatar" %>
+      <%= time_ago_in_words(post.created_at) %> ago.
+      <br>
+      Submitted by <%= post.user.name %> <br>
+      <%= post.comments.count %> Comments
+    </small>
+  </div>
+</div> 
